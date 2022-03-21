@@ -1,0 +1,47 @@
+/* By default, hide the DOM Overlay element. */
+#dom-overlay {
+  display: none;
+}
+/* Show the DOM Overlay element while active (:xr-overlay pseudoclass) */
+#dom-overlay:xr-overlay {
+  display: initial;
+}
+
+.container {
+}
+
+.card {
+  /* display property toggled by switch-card.js */
+  display: none;
+  height: 100vh;
+  align-items: flex-end;
+  justify-content: center;
+}
+/* added by switch-card.js to show cards */
+.showCard {
+  display: flex;
+}
+
+.card-body {
+  width: 80%;
+  background-color: rgba(255, 229, 174, 0.699);
+  border-radius: 25px;
+  margin-bottom: 5%;
+  padding: 20px;
+}
+.card-title {
+  margin: 0 0 15px 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.card-text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 500;
+}
+.card-title,
+.card-text {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}

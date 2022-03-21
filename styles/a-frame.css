@@ -1,0 +1,55 @@
+/* hide a-frame buttons and canvas preview in html */
+a-scene .a-enter-ar .a-enter-ar-button,
+a-scene .a-canvas,
+a-scene .a-enter-vr,
+a-scene .a-enter-vr .a-enter-vr-button {
+  visibility: hidden;
+}
+
+/* new ui to start AR-View */
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#start-scene-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+}
+#start-fg {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-image: url(img/cover.png);
+  background-size: cover;
+  pointer-events: none;
+  z-index: 100;
+}
+#start-scene {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 100%;
+  background-color: rgb(188, 190, 20);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+span {
+  color: black;
+  font-size: 7rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+}

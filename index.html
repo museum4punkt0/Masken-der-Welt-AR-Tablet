@@ -1,0 +1,500 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="styles/a-frame.css" />
+    <link rel="stylesheet" href="styles/overlay.css" />
+
+    <!-- start A-Frame Szene when button is clicked -->
+    <script src="js/start-ar.js"></script>
+    <script src="js/vendor/aframe.min.js"></script>
+    <script src="js/vendor/aframe-proxy-event-component.min.js"></script>
+    <script src="js/vendor/aframe-event-set-component.min.js"></script>
+    <!-- remove clickable option from eache el when animation is true: -->
+    <script src="js/animation-singleton.js"></script>
+    <!-- show/hide text-card for each Mask -->
+    <script src="js/switch-card.js"></script>
+  </head>
+  <body>
+    <!-- startscreen -->
+    <div id="start-scene-wrapper">
+      <div id="start-fg"></div>
+      <div id="start-scene">
+        <span>Start</span>
+      </div>
+    </div>
+
+    <!-- DOM Overlay (Text-Card) in AR-Scene -->
+    <div id="dom-overlay">
+      <div class="container">
+        <div id="card" class="card">
+          <div class="card-body">
+            <h5 id="card-title" class="card-title"></h5>
+            <p id="card-text" class="card-text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a-scene
+      webxr="requiredFeatures: hit-test,local-floor; optionalFeatures: dom-overlay; overlayElement: #dom-overlay"
+      light="defaultLightsEnabled: false"
+      renderer="physicallyCorrectLights: true; colorManagement: true;"
+      embedded
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+      animation-singleton
+    >
+      <!-- asset load -->
+      <a-assets>
+        <a-asset-item id="globe" src="./3d-assets/globe.gltf"></a-asset-item>
+
+        <a-asset-item
+          id="baliDiorama"
+          src="./3d-assets/bali_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="baliMask"
+          src="./3d-assets/bali_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="guatemalaDiorama"
+          src="./3d-assets/guatemala_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="guatemalaMask"
+          src="./3d-assets/guatemala_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="indiaDiorama"
+          src="./3d-assets/india_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="indiaMask"
+          src="./3d-assets/india_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="ivoryCostDiorama"
+          src="./3d-assets/IvoryCoast_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="ivoryCostMask"
+          src="./3d-assets/IvoryCoast_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="japanDiorama"
+          src="./3d-assets/japan_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="japanMask"
+          src="./3d-assets/japan_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="kongoDiorama"
+          src="./3d-assets/kongo_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="kongoMask"
+          src="./3d-assets/kongo_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="papuaNewGuineaDiorama"
+          src="./3d-assets/papuaNewGuinea_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="papuaNewGuineaMask"
+          src="./3d-assets/papuaNewGuinea_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="portugalDiorama"
+          src="./3d-assets/portugal_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="portugalMask"
+          src="./3d-assets/portugal_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="southKoreaDiorama"
+          src="./3d-assets/southKorea_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="southKoreaMask"
+          src="./3d-assets/southKorea_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="sriLankaDiorama"
+          src="./3d-assets/sriLanka_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="sriLankaMask"
+          src="./3d-assets/sriLanka_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="tibetDiorama"
+          src="./3d-assets/tibet_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="tibetMask"
+          src="./3d-assets/tibet_mask.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="villingenDiorama"
+          src="./3d-assets/villingen_diorama.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="villingenMask"
+          src="./3d-assets/villingen_mask.gltf"
+        ></a-asset-item>
+      </a-assets>
+      <!-- 3D View -->
+      <a-entity id="rig">
+        <a-entity camera look-controls wasd-controls>
+          <a-entity
+            cursor="fuse: true; fuseTimeout: 2000"
+            raycaster="objects: .clickable"
+            position="0 0 -0.1"
+            geometry="primitive: sphere; radius: 0.001;"
+            material="color: black; shader: flat; opacity: 0.8"
+            event-set__mouseenter="_event: mouseenter; material.color: #E20C01"
+            animation__enter="startEvents: mouseenter; property: scale; to: 5 5 5; dur: 500; easing: easeInOutSine; dir: alternate; loop: true"
+            animation__leave="startEvents: mouseleave; property: scale; to: 1 1 1; dur: 1000; easing: linear;"
+            animation__rescolor="startEvents: mouseleave; property: material.color; to: black; dur: 100; easing: linear;"
+          >
+          </a-entity>
+        </a-entity>
+      </a-entity>
+      <!-- ========
+      Pos 3d Assets
+      ========= -->
+      <!-- group a-entity to set up global pos of all 3D Assets: -->
+      <a-entity position="0 0 -2" rotation="0 -115 0">
+        <a-entity gltf-model="#globe" position="0 1 0" scale="1 1 1"></a-entity>
+
+        <!-- baliMask -->
+        <a-entity
+          id="bm"
+          class="clickable"
+          switch-card
+          gltf-model="#baliMask"
+          position="-0.32882 0.8637 -0.67609"
+          rotation="23.958803161190502 178.62875995675623 -12.948846169956605"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #bd; as: click-bm"
+          animation__pos+="property: position; startEvents: click; from: -0.32882 0.8637 -0.67609; to: -0.48865 0.91055 -0.77761; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: -0.48865 0.91055 -0.77761; to: -0.32882 0.8637 -0.67609; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 23.958803161190502 178.62875995675623 -12.948846169956605; to: 26.039 156.964 -12.983; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 26.039 156.964 -12.983; to: 23.958803161190502 178.62875995675623 -12.948846169956605; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- baliDiorama -->
+        <a-entity
+          id="bd"
+          gltf-model="#baliDiorama"
+          position="-0.48865 0.91055 -0.77761"
+          rotation="26.039 156.964 -12.983"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-bm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- guatemalaMask -->
+        <a-entity
+          id="gm"
+          class="clickable"
+          switch-card
+          gltf-model="#guatemalaMask"
+          position="0.00788 1.13164 -0.75356"
+          rotation="16.911995238876507 166.8076467671128 0.43831271327507976"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #gd; as: click-gm"
+          animation__pos+="property: position; startEvents: click; from: 0.00788 1.13164 -0.75356; to: 0 1.01379 -0.89967; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0 1.01379 -0.89967; to: 0.00788 1.13164 -0.75356; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 16.911995238876507 166.8076467671128 0.43831271327507976; to: 29.156103320822204 154.3893595154473 -2.402412034983542; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 29.156103320822204 154.3893595154473 -2.402412034983542; to: 16.911995238876507 166.8076467671128 0.43831271327507976; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- guatemalaDiorama -->
+        <a-entity
+          id="gd"
+          gltf-model="#guatemalaDiorama"
+          position="0 1.01379 -0.89967"
+          rotation="29.156103320822204 154.3893595154473 -2.402412034983542"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-gm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- indiaMask -->
+        <a-entity
+          id="ikm"
+          class="clickable"
+          switch-card
+          gltf-model="#indiaMask"
+          position="0.18255 1.11976 -0.74597"
+          rotation="3.169602522663715 173.4417730374369 0.21829691994484365"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #ikd; as: click-ikm"
+          animation__pos+="property: position; startEvents: click; from: 0.18255 1.11976 -0.74597; to: 0.12965 1.04769 -0.88064; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0.12965 1.04769 -0.88064; to: 0.18255 1.11976 -0.74597; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 3.169602522663715 173.4417730374369 0.21829691994484365; to:27.871531944138894 162.9113817207275 4.5097508054747095; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from:27.871531944138894 162.9113817207275 4.5097508054747095; to: 3.169602522663715 173.4417730374369 0.21829691994484365; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- indiaDiorama -->
+        <a-entity
+          id="ikd"
+          gltf-model="#indiaDiorama"
+          position="0.12965 1.04769 -0.88064"
+          rotation="27.871531944138894 162.9113817207275 4.5097508054747095"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-ikm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- ivoryCostMask -->
+        <a-entity
+          id="icm"
+          class="clickable"
+          switch-card
+          gltf-model="#ivoryCostMask"
+          position="0.78042 1.03342 0.09418"
+          rotation="2.379493723178309 96.77600934436683 -0.3449205926687556"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #icd; as: click-icm"
+          animation__pos+="property: position; startEvents: click; from: 0.78042 1.03342 0.09418; to: 0.87198 1.00893 0.05199; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0.87198 1.00893 0.05199; to: 0.78042 1.03342 0.09418; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 2.379493723178309 96.77600934436683 -0.3449205926687556; to: 30.221231861970406 80.44499330975297 -4.842639284445718; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 30.221231861970406 80.44499330975297 -4.842639284445718; to: 2.379493723178309 96.77600934436683 -0.3449205926687556; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- ivoryCostDiorama -->
+        <a-entity
+          id="icd"
+          gltf-model="#ivoryCostDiorama"
+          position="0.87198 1.00893 0.05199"
+          rotation="30.221231861970406 80.44499330975297 -4.842639284445718"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-icm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- japanMask -->
+        <a-entity
+          id="jm"
+          class="clickable"
+          switch-card
+          gltf-model="#japanMask"
+          position="-0.47401 1.41738 -0.4781"
+          rotation="-15.154733681210276 -113.41871441953185 -0.5580608924574219"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #jd; as: click-jm"
+          animation__pos+="property: position; startEvents: click; from: -0.47401 1.41738 -0.4781; to: -0.5505 1.36716 -0.47942; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: -0.5505 1.36716 -0.47942; to: -0.47401 1.41738 -0.4781; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -15.154733681210276 -113.41871441953185 -0.5580608924574219; to: 41.11774320976839 -148.57655064434942 -10.119007619805469; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 41.11774320976839 -148.57655064434942 -10.119007619805469; to: -15.154733681210276 -113.41871441953185 -0.5580608924574219; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- japanDiorama -->
+        <a-entity
+          id="jd"
+          gltf-model="#japanDiorama"
+          position="-0.5505 1.36716 -0.47942"
+          rotation="41.11774320976839 -148.57655064434942 -10.119007619805469"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-jm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- kongoMask -->
+        <a-entity
+          id="km"
+          class="clickable"
+          switch-card
+          gltf-model="#kongoMask"
+          position="0.78439 1.01646 -0.20967"
+          rotation="1.8168491683598407 113.65821077789654 4.615175039778781"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #kd; as: click-km"
+          animation__pos+="property: position; startEvents: click; from: 0.78439 1.01646 -0.20967; to: 0.78989 1.01646 -0.36944; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0.78989 1.01646 -0.36944; to: 0.78439 1.01646 -0.20967; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 1.8168491683598407 113.65821077789654 4.615175039778781; to: 37.92121167073354 129.29365604922157 0.9556936022782132; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 37.92121167073354 129.29365604922157 0.9556936022782132; to: 1.8168491683598407 113.65821077789654 4.615175039778781; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- kongoDiorama -->
+        <a-entity
+          id="kd"
+          gltf-model="#kongoDiorama"
+          position="0.78989 1.01646 -0.36944"
+          rotation="37.92121167073354 129.29365604922157 0.9556936022782132"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-km; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- papuaNewGuineaMask -->
+        <a-entity
+          id="pngm"
+          class="clickable"
+          switch-card
+          gltf-model="#papuaNewGuineaMask"
+          position="-0.65934 0.87268 -0.43031"
+          rotation="-1.8391945223699424 -124.73291199998022 -3.497907339273676"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #pngd; as: click-pngm"
+          animation__pos+="property: position; startEvents: click; from: -0.65934 0.87268 -0.43031; to: -0.80918 0.79855 -0.43721; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: -0.80918 0.79855 -0.43721; to: -0.65934 0.87268 -0.43031; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -1.8391945223699424 -124.73291199998022 -3.497907339273676; to: 32.278723304285194 -116.06119577067521 3.7225067949649584; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 32.278723304285194 -116.06119577067521 3.7225067949649584; to: -1.8391945223699424 -124.73291199998022 -3.497907339273676; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- papuaNewGuineaDiorama -->
+        <a-entity
+          id="pngd"
+          gltf-model="#papuaNewGuineaDiorama"
+          position="-0.80918 0.79855 -0.43721"
+          rotation="32.278723304285194 -116.06119577067521 3.7225067949649584"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-pngm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- portugalMask -->
+        <a-entity
+          id="pm"
+          class="clickable"
+          switch-card
+          gltf-model="#portugalMask"
+          position="0.67224 1.4286 0.05747"
+          rotation="-15.07623846327735 87.9942852183967 3.106004207404193"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #pd; as: click-pm"
+          animation__pos+="property: position; startEvents: click; from: 0.67224 1.4286 0.05747; to: 0.56249 1.50935 0,12716; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0.56249 1.50935 0,12716; to: 0.67224 1.4286 0.05747; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -15.07623846327735 87.9942852183967 3.106004207404193; to: 44.13551191672245 63.273448189682206 -2.914063346035367; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 44.13551191672245 63.273448189682206 -2.914063346035367; to: -15.07623846327735 87.9942852183967 3.106004207404193; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- portugalDiorama -->
+        <a-entity
+          id="pd"
+          gltf-model="#portugalDiorama"
+          position="0.56249 1.50935 0,12716"
+          rotation="44.13551191672245 63.273448189682206 -2.914063346035367"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-pm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- southKoreaMask -->
+        <a-entity
+          id="scm"
+          class="clickable"
+          switch-card
+          gltf-model="#southKoreaMask"
+          position="-0.40197 1.43253 -0.49419"
+          rotation="-15.566117378114205 -153.7377544628879 12.715079389543229"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #scd; as: click-scm"
+          animation__pos+="property: position; startEvents: click; from: -0.40197 1.43253 -0.49419; to: -0.43102 1.49577 -0.46517; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: -0.43102 1.49577 -0.46517; to: -0.40197 1.43253 -0.49419; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -15.566117378114205 -153.7377544628879 12.715079389543229; to: 42.813698283355635 -98.06115367884526 34.706345482254484; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 42.813698283355635 -98.06115367884526 34.706345482254484; to: -15.566117378114205 -153.7377544628879 12.715079389543229; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- southKoreaDiorama -->
+        <a-entity
+          id="scd"
+          gltf-model="#southKoreaDiorama"
+          position="-0.43102 1.49577 -0.46517"
+          rotation="42.813698283355635 -98.06115367884526 34.706345482254484"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-scm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- sriLankaMask -->
+        <a-entity
+          id="slm"
+          class="clickable"
+          switch-card
+          gltf-model="#sriLankaMask"
+          position="0.09871 1.03371 -0.7424"
+          rotation="36.534080848721814 -173.16446146459356 1.3642125102064901"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #sld; as: click-slm"
+          animation__pos+="property: position; startEvents: click; from: 0.09871 1.03371 -0.7424; to: 0 0.9731 -0.93578; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0 0.9731 -0.93578; to: 0.09871 1.03371 -0.7424; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: 36.534080848721814 -173.16446146459356 1.3642125102064901; to: 31.357980127509954 -137.454866883065 17.16982624668538; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 31.357980127509954 -137.454866883065 17.16982624668538; to: 36.534080848721814 -173.16446146459356 1.3642125102064901; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- sriLankaDiorama -->
+        <a-entity
+          id="sld"
+          gltf-model="#sriLankaDiorama"
+          position="0 0.9731 -0.93578"
+          rotation="31.357980127509954 -137.454866883065 17.16982624668538"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-slm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- tibetMask -->
+        <a-entity
+          id="tm"
+          class="clickable"
+          switch-card
+          gltf-model="#tibetMask"
+          position="-0.02538 1.39881 -0.6656"
+          rotation="-7.345318933577154 -177.76015593933792 -0.03151267873219528"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #td; as: click-tm"
+          animation__pos+="property: position; startEvents: click; from: -0.02538 1.39881 -0.6656; to: -0.02538 1.46054 -0.68001; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: -0.02538 1.46054 -0.68001; to: -0.02538 1.39881 -0.6656; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -7.345318933577154 -177.76015593933792 -0.03151267873219528; to: 43.857627386084 -148.1393838466646 23.297036907814405; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 43.857627386084 -148.1393838466646 23.297036907814405; to: -7.345318933577154 -177.76015593933792 -0.03151267873219528; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- tibetDiorama -->
+        <a-entity
+          id="td"
+          gltf-model="#tibetDiorama"
+          position="-0.02538 1.46054 -0.68001"
+          rotation="43.857627386084 -148.1393838466646 23.297036907814405"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-tm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+        <!-- villingenMask -->
+        <a-entity
+          id="vm"
+          class="clickable"
+          switch-card
+          gltf-model="#villingenMask"
+          position="0.58531 1.53125 -0.04902"
+          rotation="-38.085077600140956 107.81117647858649 -7.85754320242411"
+          scale="0.4 0.4 0.4"
+          proxy-event="event: click; to: #vd; as: click-vm"
+          animation__pos+="property: position; startEvents: click; from: 0.58531 1.53125 -0.04902; to: 0.5899 1.50012 -0.214; dur: 500;"
+          animation__pos-="property: position; startEvents: animationcomplete__pos+; delay: 20000; from: 0.5899 1.50012 -0.214; to: 0.58531 1.53125 -0.04902; dur: 500;"
+          animation__rot+="property: rotation; startEvents: click; from: -38.085077600140956 107.81117647858649 -7.85754320242411; to: 47.563518404990155 93.03688677334307 -14.115961198638093; dur: 500;"
+          animation__rot-="property: rotation; startEvents: animationcomplete__rot+; delay: 20000; from: 47.563518404990155 93.03688677334307 -14.115961198638093; to: -38.085077600140956 107.81117647858649 -7.85754320242411; dur: 500;"
+          animation__scale+="property: scale; startEvents: click; from: 0.4 0.4 0.4; to: 1 1 1; dur: 500;"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0.4 0.4 0.4; dur: 500;"
+        ></a-entity>
+        <!-- villingenDiorama -->
+        <a-entity
+          id="vd"
+          gltf-model="#villingenDiorama"
+          position="0.5899 1.50012 -0.214"
+          rotation="47.563518404990155 93.03688677334307 -14.115961198638093"
+          scale="0 0 0"
+          animation__scale+="property: scale; startEvents: click-vm; from: 0 0 0; to: 1 1 1; dur: 500"
+          animation__scale-="property: scale; startEvents: animationcomplete__scale+; delay: 20000; from: 1 1 1; to: 0 0 0; dur: 500;"
+        ></a-entity>
+      </a-entity>
+
+      <a-entity light="intensity: 2; type: ambient"></a-entity>
+    </a-scene>
+  </body>
+</html>
