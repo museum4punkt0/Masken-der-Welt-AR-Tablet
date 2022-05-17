@@ -1,6 +1,15 @@
 # Tablet AR-Anwendung: Masken der Welt
 
-[TOC]
+- Tablet AR-Anwendung: Masken der Welt
+  * [Kurzbeschreibung](#kurzbeschreibung)
+  * [Förderhinweis](#förderhinweis)
+  * [Installation](#installation)
+    + [Hardware Voraussetzung:](#hardware-voraussetzung-)
+    + [Installation der Anwendung:](#installation-der-anwendung-)
+    + [Browser:](#browser-)
+  * [Benutzung](#benutzung)
+  * [Credits](#credits)
+  * [Lizenz](#lizenz) 
 
 ## Kurzbeschreibung
 
