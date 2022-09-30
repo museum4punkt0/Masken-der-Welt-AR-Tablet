@@ -40,7 +40,7 @@ Aktuell unterstützen nicht alle Browser die durch [A-Frame](https://aframe.io/)
 1. Auf dem Start Screen den Play Button mit einem Tap auslösen
 2. Der AR-View (neues Fullscreen Fenster) öffnet sich. Die Kamera wird gestartet und ein Globus erscheint. Um den Globus sind verschiedene Masken Angeordnet.
 3. Der Globus kann frei umgangen werden.
-4. In der Mitte des Screens ist ein schwarzer Punk zu sehen. Mit Hilfe des Punktes können Masken ausgewählt werden. Dazu muss eine Maske mit dem Punk fokussiert werden. Der Punkt verfärbt sich rot und wird abwechselnd größer und kleiner. Nach kurzer Zeit vergrößert sich die Maske und es erscheint das dazugehörige Diorama und ein Textfeld.
+4. In der Mitte des Screens ist ein schwarzer Punkt zu sehen. Mit Hilfe des Punktes können Masken ausgewählt werden. Dazu muss eine Maske mit dem Punkt fokussiert werden. Der Punkt verfärbt sich rot und wird abwechselnd größer und kleiner. Nach kurzer Zeit vergrößert sich die Maske und es erscheint das dazugehörige Diorama und ein Textfeld.
 5. Nach einer vordefinierten Zeit gehen Maske und Diorama wieder in ihre Ausgangsposition zurück. Nun können nacheinander weitere Masken betrachtet und ausgewählt werden.
 
 ## Credits
